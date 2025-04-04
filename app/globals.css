@@ -1,26 +1,139 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  @apply font-inter;
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-Thin.ttf");
+  font-weight: 300;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-Medium.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-Regular.ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-SemiBold.ttf");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-ExtraBold.ttf");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter;
+  src: url("/fonts/Inter_24pt-Black.ttf");
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Thin scrollbar */
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    #3b82f6,
+    #8b5cf6
+  ); /* Gradient of dark blue (#3b82f6) and violet (#8b5cf6) */
+  border-radius: 4px; /* Rounded corners */
+  transition: background 0.3s ease; /* Smooth transition */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    45deg,
+    #2563eb,
+    #7c3aed
+  ); /* Darker gradient on hover */
+}
+
+/* Custom class for scaling from the left */
+.transform-origin-left {
+  transform-origin: left; /* Scale from the left side */
+}
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 0%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animated-gradient {
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+    135deg,
+    #0c69ff,
+    #c32ee1,
+    #1883bc,
+    #eb2556,
+    #99ca07
+  );
+  animation: gradient-shift 10s ease-in-out infinite;
+}
+
+
+.no-copy-line-numbers span[class*="linenumber"] {
+  user-select: none; /* Prevents copying */
+  pointer-events: none; /* Stops interaction */
+  color: #888; /* Keeps them visible */
+}
+
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
 }
