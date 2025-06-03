@@ -1,0 +1,46 @@
+name: Deploy MadhuranjanUI to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Setup SSH Private Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add VPS to known_hosts
+        run: ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Code via rsync
+        run: |
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='node_modules' \
+            --exclude='.next' \
+            ./ root@${{ secrets.VPS_HOST }}:/var/www/madhuranjanui/
+
+      - name: SSH into VPS and Restart PM2
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /var/www/madhuranjanui
+            npm install --legacy-peer-deps
+            npm run build
+            pm2 restart madhuranjanui || pm2 start npm --name "madhuranjanui" -- start
+          EOF
