@@ -21,7 +21,7 @@ const page = () => {
 export default page;
 
 export const metadata = {
-  title: "Madhuranjan UI - Tailwind CSS Component Library",
+  title: "Madhuranjan UI - Pure Tailwind CSS Component Library",
   description:
     "Build fast, modern, and beautiful websites with Madhuranjan UI – a free and Most Advanced Pure Tailwind CSS component library. Dark mode ready, responsive, and production-ready components for any project.",
   keywords: [
